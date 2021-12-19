@@ -2,7 +2,7 @@
 
 ## Guillaume :
 - [ ] Réalisation du site internet PHP (Appels fonctions PGSQL)
-- [ ] Création du repo
+- [x] Création du repo
 - [ ] Activités recherche news - couloirs acteurs
 - [ ] Structure
 CRON appel procédure archivage
