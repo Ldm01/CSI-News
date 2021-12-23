@@ -15,7 +15,7 @@ CRON appel procédure archivage
 - [ ] Inscription
 ## Valentin : 
 - [ ] Création des utilisateurs BDD + droits associés
-- [ ] Rajouter description droits
+- [O] Rajouter description droits
 - [ ] Publier une news
 - [ ] Archiver une news
 ## Benjamin : 
