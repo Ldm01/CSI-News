@@ -1,0 +1,13 @@
+form {
+    padding: 15px;
+}
+
+#register {
+    text-align: center;
+    display: inline-block;
+}
+
+#login {
+    text-align: center;
+    display: inline-block;
+}
