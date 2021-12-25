@@ -32,9 +32,12 @@ function displayMenu($page)
 			<ul>
 				<li><a href="index.php"'.$home.'>Accueil</a></li>
 				<li><a href="news.php"'.$news.'>News</a></li>
-				<li><a href="#"'.$profil.'>Profil</a></li>
-				<li><a href="#"'.$register.'>S\'inscrire/Se connecter</a></li>
+				<li><a href="profil.php"'.$profil.'>Profil</a></li>
+				<li><a href="register_loginPage.php"'.$register.'>S\'inscrire/Se connecter</a></li>
 			</ul>
 		</nav>
+		<br/>
 	';
+
+    // ajouter pages archives et option se déconnecter quand utilisateur est bien connecté
 }
