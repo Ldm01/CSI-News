@@ -1,0 +1,47 @@
+#active_news_table, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+#active_news_table th {
+    color: white;
+    background-color: #3c91e2;
+    font-size: 18px;
+    padding: 3px 0 3px 0;
+}
+
+#active_news {
+    width: 40%;
+    height: 472px;
+    overflow-y: scroll;
+    display: inline-block;
+}
+
+.readBtn {
+    float: right;
+    padding: 5px;
+    border: 2px solid black;
+    background-color: #3c91e2;;
+    border-radius: 12px;
+    color: white;
+}
+
+fieldset {
+    display: inline-block;
+    margin-bottom: 180px;
+    text-align: center;
+}
+
+.boutons {
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #3c91e2;
+    color: white;
+}
+
+.boutons:hover {
+    background-color: lightblue;
+    color: white;
+    transition: .4s;
+}

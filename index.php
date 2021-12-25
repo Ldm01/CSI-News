@@ -1,21 +1,57 @@
-<?php require 'connectDb.php'?>
+<?php //require 'connectDb.php'?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
 		<meta charset="utf-8">
 		<title>News en ligne - CSI</title>
 		<link rel="stylesheet" type="text/css" href="css/menu.css">
+        <link rel="stylesheet" type="text/css" href="css/accueil.css">
 		<meta name="viewport" contect="width=device-width, initial-scale=1.0">
 		<script src="https://kit.fontawesome.com/f3b2d82c4d.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<?php include 'menu.php'; displayMenu('home'); ?>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
+        <div class="content" id="active_news">
+            <table id="active_news_table">
+                <tr>
+                    <th>News de vos catégories préférées</th>
+                </tr>
+                <tr>
+                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
+                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
+                        <br/>Etat : Validée
+                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
+                </tr>
+                <tr>
+                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
+                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
+                        <br/>Etat : Validée
+                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
+                </tr>
+                <tr>
+                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
+                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
+                        <br/>Etat : Validée
+                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
+                </tr>
+                <tr>
+                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
+                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
+                        <br/>Etat : Validée
+                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
+                </tr>
+            </table>
+        </div>
+        <fieldset id="catPref">
+            <legend style="font-weight: bold;font-size:20px;">Vos catégories préférées :</legend>
+            Jeux Vidéo, Sciences, Nourriture
+            <p>Rendez-vous sur votre profil pour ajouter des catégories à votre liste d'intérêt.</p>
+            <a href="profil.php" class="boutons">Aller sur mon profil</a>
+        </fieldset>
 	</body>
 </html>
