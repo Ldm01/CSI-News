@@ -1,0 +1,15 @@
+form {
+    text-align: center;
+    padding-top: 5px;
+}
+
+#keyword {
+    padding: 2px 70px 2px 5px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 8px;
+    border: 2px black solid;
+    border-radius: 10px;
+}
