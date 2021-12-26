@@ -4,7 +4,7 @@
 - [ ] Réalisation du site internet PHP (Appels fonctions PGSQL)
 - [x] Création du repo
 - [ ] Activités recherche news - couloirs acteurs
-- [ ] Structure
+- [x] Structure
 - [ ] Création des comptes liés aux différents rôles
 - [ ] CRON appel procédure archivage
 - [ ] Modifier paramètres du site (Args : le paramètre qu’on veut changer)
