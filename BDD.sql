@@ -255,6 +255,6 @@ CREATE ROLE abonne;
 GRANT SELECT ON domaine, news, mot_cle, archive_news TO abonne;
 GRANT INSERT ON domaine, news, mot_cle TO abonne;
 
-CREATE ROLE "user";
-GRANT SELECT ON news, mot_cle TO "user";
-GRANT INSERT ON compte TO "user";
+CREATE ROLE utilisateur;
+GRANT SELECT ON news, mot_cle TO utilisateur;
+GRANT INSERT ON compte TO utilisateur;
