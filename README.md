@@ -5,6 +5,7 @@
 - [x] Création du repo
 - [ ] Activités recherche news - couloirs acteurs
 - [ ] Structure
+- [ ] Création des comptes liés aux différents rôles
 CRON appel procédure archivage
 - [ ] Modifier paramètres du site (Args : le paramètre qu’on veut changer)
 ## Quentin :
@@ -20,7 +21,7 @@ CRON appel procédure archivage
 - [ ] Archiver une news
 ## Benjamin : 
 - [ ] Diagramme états
-- [ ] Création des tables PGSQL
+- [x] Création des tables PGSQL
 - [ ] Vérification attributs news 
 - [ ] Connexion	
 - [ ] Choisir abonné de confiance au hasard pour valider la news
