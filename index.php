@@ -1,4 +1,4 @@
-<?php //require 'connectDb.php'?>
+<?php require 'connectDb.php'?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>

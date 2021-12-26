@@ -249,12 +249,15 @@ ALTER TABLE parametre
 
 CREATE ROLE administrateur;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO administrateur;
+ALTER ROLE administrateur WITH LOGIN;
 
 
 CREATE ROLE abonne;
 GRANT SELECT ON domaine, news, mot_cle, archive_news TO abonne;
 GRANT INSERT ON domaine, news, mot_cle TO abonne;
+ALTER ROLE abonne WITH LOGIN;
 
 CREATE ROLE utilisateur;
 GRANT SELECT ON news, mot_cle TO utilisateur;
 GRANT INSERT ON compte TO utilisateur;
+ALTER ROLE utilisateur WITH LOGIN;

@@ -5,7 +5,7 @@
 - [x] Création du repo
 - [ ] Activités recherche news - couloirs acteurs
 - [x] Structure
-- [ ] Création des comptes liés aux différents rôles
+- [x] Création des comptes liés aux différents rôles
 - [ ] CRON appel procédure archivage
 - [ ] Modifier paramètres du site (Args : le paramètre qu’on veut changer)
 ## Quentin :
