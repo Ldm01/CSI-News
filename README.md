@@ -6,7 +6,7 @@
 - [ ] Activités recherche news - couloirs acteurs
 - [ ] Structure
 - [ ] Création des comptes liés aux différents rôles
-CRON appel procédure archivage
+- [ ] CRON appel procédure archivage
 - [ ] Modifier paramètres du site (Args : le paramètre qu’on veut changer)
 ## Quentin :
 - [ ] Dictionnaire de données
