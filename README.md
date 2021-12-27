@@ -13,7 +13,7 @@
 - [ ] Modèle physique
 - [ ] Soumettre un nom de domaine
 - [ ] Recherche news par mots clés
-- [ ] Inscription
+- [V] Inscription
 ## Valentin : 
 - [O] Création des utilisateurs BDD + droits associés
 - [O] Rajouter description droits
