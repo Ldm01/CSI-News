@@ -9,7 +9,7 @@
 - [ ] CRON appel procédure archivage
 - [ ] Modifier paramètres du site (Args : le paramètre qu’on veut changer)
 ## Quentin :
-- [ ] Dictionnaire de données
+- [V] Dictionnaire de données
 - [ ] Modèle physique
 - [ ] Soumettre un nom de domaine
 - [ ] Recherche news par mots clés
