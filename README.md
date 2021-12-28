@@ -19,6 +19,7 @@
 - [O] Rajouter description droits
 - [ ] Publier une news
 - [ ] Archiver une news
+- [ ] Trigger devenir abonne confiance
 ## Benjamin : 
 - [ ] Diagramme états
 - [x] Création des tables PGSQL
