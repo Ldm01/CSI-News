@@ -9,16 +9,17 @@
 - [ ] CRON appel procédure archivage
 - [ ] Modifier paramètres du site (Args : le paramètre qu’on veut changer)
 ## Quentin :
-- [ ] Dictionnaire de données
+- [V] Dictionnaire de données
 - [ ] Modèle physique
 - [ ] Soumettre un nom de domaine
 - [ ] Recherche news par mots clés
-- [ ] Inscription
+- [V] Inscription
 ## Valentin : 
 - [O] Création des utilisateurs BDD + droits associés
 - [O] Rajouter description droits
 - [ ] Publier une news
 - [ ] Archiver une news
+- [ ] Trigger devenir abonne confiance
 ## Benjamin : 
 - [ ] Diagramme états
 - [x] Création des tables PGSQL
