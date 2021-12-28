@@ -9,11 +9,14 @@
 		<script src="https://kit.fontawesome.com/f3b2d82c4d.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
-        <?php include 'menu.php'; displayMenu('news'); ?>
+        <?php include 'menu.php'; displayMenu('news');
+        if (isset($_SESSION['id'])) {
+        ?>
         <div class="content">
             <!-- SI CONNECTE -->
             <a href="publishNews.php" class="boutons">Publier une news</a>
         </div><br/>
+        <?php } ?>
         <div class="content" id="active_news">
             <table id="active_news_table">
                 <tr>

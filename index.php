@@ -1,4 +1,3 @@
-<?php require 'connectDb.php'?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -10,7 +9,9 @@
 		<script src="https://kit.fontawesome.com/f3b2d82c4d.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<?php include 'menu.php'; displayMenu('home'); ?>
+		<?php include 'menu.php'; displayMenu('home');
+        if (isset($_SESSION['id'])) {
+        ?>
 
         <div class="content" id="active_news">
             <table id="active_news_table">
@@ -53,5 +54,11 @@
             <p>Rendez-vous sur votre profil pour ajouter des catégories à votre liste d'intérêt.</p>
             <a href="profil.php" class="boutons">Aller sur mon profil</a>
         </fieldset>
+
+        <?php
+        } else {
+            echo '<p style="margin-left: 10px">Veuillez vous <a href="register_loginPage.php">connecter</a> pour afficher les news de vos catégories préférées.</p>';
+        }
+        ?>
 	</body>
 </html>

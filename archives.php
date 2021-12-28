@@ -9,11 +9,7 @@
     <script src="https://kit.fontawesome.com/f3b2d82c4d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<?php include 'menu.php'; displayMenu('news'); ?>
-<div class="content">
-    <!-- SI CONNECTE -->
-    <a href="publishNews.php" class="boutons">Publier une news</a>
-</div><br/>
+<?php include 'menu.php'; displayMenu('archives'); ?>
 <div class="content" id="active_news">
     <table id="active_news_table">
         <tr>

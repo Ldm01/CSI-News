@@ -69,7 +69,7 @@
                     <option value="1">Catégorie 3</option>
                     <option value="1">Catégorie 4</option>
                 </select><br/>
-                <input style="margin-top: 10px;" type="submit" value="Ajouter à sa liste de catégories préférées">
+                <input style="margin-top: 10px;" type="submit" value="Supprimer de sa liste de catégories préférées">
             </form>
         </fieldset>
         <fieldset>
