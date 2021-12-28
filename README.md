@@ -24,7 +24,7 @@
 - [ ] Diagramme états
 - [x] Création des tables PGSQL
 - [ ] Vérification attributs news 
-- [ ] Connexion	
+- [x] Connexion	
 - [ ] Choisir abonné de confiance au hasard pour valider la news
 
 ## Everyone :
