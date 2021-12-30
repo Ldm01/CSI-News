@@ -22,34 +22,7 @@
                 <tr>
                     <th>News Actives | Toutes catégories</th>
                 </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
+                <?php include 'displayNews.php'; ?>
             </table>
         </div>
         <fieldset>
