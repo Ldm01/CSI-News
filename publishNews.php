@@ -5,6 +5,7 @@
     <title>News en ligne - CSI</title>
     <link rel="stylesheet" type="text/css" href="css/menu.css">
     <link rel="stylesheet" type="text/css" href="css/publishNews.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <meta name="viewport" contect="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/f3b2d82c4d.js" crossorigin="anonymous"></script>
 </head>
@@ -19,24 +20,46 @@
             <label for="content">Contenu de la news :</label><br/>
             <textarea id="content" name="content" rows="18" cols="80" placeholder="Ecrivez votre news ici..."></textarea><br/>
             <label for="duration">Combien de temps (nb de jours) voulez-vous que votre news soit affichée publiquement ?</label>
-            <input type="number" min="2" max="14" value="2"><br/>
-            <label for="keyword">Veuillez sélectionner au minimum un mot clé :</label><br/>
-            <select id="keyword" name="keyword1" multiple size="4">
-                <option value="1" selected>Mot clé 1</option>
-                <option value="2">Mot clé 2</option>
-                <option value="3">Mot clé 3</option>
-                <option value="4">Mot clé 4</option>
-                <option value="5">Mot clé 5</option>
+            <input type="number" min="2" max="14" value="2" name="duration" id="duration"><br/>
+            <label for="keywords">Veuillez sélectionner au minimum un mot clé :</label><br/>
+            <select id="keywords" name="keywords[]" multiple size="4" required>
+                <?php
+                $response = $db->prepare('SELECT * FROM mot_cle');
+                $response->execute();
+                while ($data = $response->fetch()) {
+                    echo '<option value="'.$data['idmotcle'].'">'.$data['libelle'].'</option>';
+                }
+                ?>
             </select><br/>
             <label for="domain">Veuillez sélectionner le domaine associé à la news :</label>
             <select id="domain" name="domain">
-                <option value="sciences">Sciences</option>
-                <option value="politique">Politique</option>
-                <option value="jeux_videos">Jeux Video</option>
+                <?php
+                $response = $db->prepare('SELECT * FROM domaine WHERE estaccepte');
+                $response->execute();
+                while ($data = $response->fetch()) {
+                    echo '<option value="'.$data['iddomaine'].'">'.$data['libelle'].'</option>';
+                }
+                ?>
             </select> <br/>
             <input type="submit" value="Publier la news">
         </form>
     </fieldset>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var last_valid_selection = null;
+
+        $('#keyword').change(function(event) {
+
+            if ($(this).val().length > 3) {
+
+                $(this).val(last_valid_selection);
+            } else {
+                last_valid_selection = $(this).val();
+            }
+        });
+    });
+</script>
 </body>
 </html>
