@@ -21,7 +21,7 @@ while($data = $response->fetch()) {
     }
 }
 
-$response = $db->prepare("SELECT * FROM abonne INNER JOIN compte ON compte.pseudo = :pseudo");
+$response = $db->prepare("SELECT * FROM abonne INNER JOIN compte ON compte.pseudo = abonne.pseudo WHERE compte.pseudo = :pseudo");
 $response->execute(array('pseudo' => $username));
 while($data = $response->fetch()) {
     $_SESSION['id'] = $data['idabonne'];

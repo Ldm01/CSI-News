@@ -49,7 +49,7 @@ function displayMenu($page)
 		</nav>
 		<br/>
 	';
-    } elseif ($_SESSION['admin']) {
+    } elseif (isset($_SESSION['admin']) && $_SESSION['admin']) {
         echo '
 		<nav class="menu">
 			<input type="checkbox" id="check">

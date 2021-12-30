@@ -18,39 +18,22 @@
                 <tr>
                     <th>News de vos catégories préférées</th>
                 </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
+                <?php include 'displayByPreferedCat.php'; ?>
             </table>
         </div>
         <fieldset id="catPref">
             <legend style="font-weight: bold;font-size:20px;">Vos catégories préférées :</legend>
-            Jeux Vidéo, Sciences, Nourriture
+            <?php
+            $response = $db->prepare('
+                        SELECT * FROM domaine WHERE domaine.iddomaine IN (
+                                SELECT interet.iddomaine FROM interet WHERE idabonne=:id
+                            )
+                        ');
+            $response->execute(array('id' => $_SESSION['id']));
+            while ($data = $response->fetch()) {
+                echo $data['libelle'].', ';
+            }
+            ?>
             <p>Rendez-vous sur votre profil pour ajouter des catégories à votre liste d'intérêt.</p>
             <a href="profil.php" class="boutons">Aller sur mon profil</a>
         </fieldset>

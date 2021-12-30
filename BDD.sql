@@ -104,7 +104,6 @@ CREATE TABLE IF NOT EXISTS interet
     idDomaine integer,
     FOREIGN KEY(idAbonne) REFERENCES abonne(idAbonne),
     FOREIGN KEY(idDomaine) REFERENCES domaine(idDomaine),
-    PRIMARY KEY (idAbonne)
     )
 
     TABLESPACE pg_default;
@@ -256,8 +255,9 @@ CREATE USER adminUser;
 GRANT administrateur TO adminUser;
 
 CREATE ROLE abonne;
-GRANT SELECT ON compte, abonne, domaine, news, mot_cle, archive_news TO abonne;
-GRANT INSERT ON compte, abonne, domaine, etude, news, mot_cle TO abonne;
+GRANT SELECT ON compte, abonne, domaine, news, mot_cle, archive_news, interet TO abonne;
+GRANT INSERT ON compte, abonne, domaine, etude, news, mot_cle, interet TO abonne;
+GRANT DELETE ON interet, news TO abonne;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO abonne;
 CREATE USER abonneUser;
 GRANT abonne TO abonneUser;

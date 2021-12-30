@@ -8,7 +8,7 @@ try {
             '',
             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
         );
-    } elseif ($_SESSION['admin']) {
+    } elseif (isset($_SESSION['admin']) && $_SESSION['admin']) {
         $db = new PDO(
             'pgsql:host=localhost;dbname=gestionnews',
             'adminuser',

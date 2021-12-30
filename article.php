@@ -11,7 +11,13 @@
     </head>
     <body>
 <?php include 'menu.php'; displayMenu('news'); include 'displayArticle.php';
-
+    if (isset($_SESSION['id']) && $_SESSION['id'] === $idAbo) {
+        echo '<form action="deleteArticle.php" method="post">
+                <input type="hidden" value="' . $id . '" name="idArticle">
+                <input type="submit" value="Supprimer l\'article"</a>
+                </form>
+                ';
+    }
         if ($state !== 'validé') {?>
         <fieldset style="text-align: center;" id="validateNews">
             <legend>Valider la news</legend>

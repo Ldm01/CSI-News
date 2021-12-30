@@ -48,26 +48,43 @@
         </div>
         <fieldset>
             <legend>Ajouter une catégorie préférée</legend>
-            <form>
+            <form action="addPrefCat.php" method="post">
                 <label for="category">Catégorie choisie :</label>
+                <?php
+                $response = $db->prepare('
+                        SELECT * FROM domaine
+                        WHERE domaine.iddomaine NOT IN (SELECT interet.iddomaine FROM interet WHERE idabonne=:id) AND estaccepte
+                    ');
+                $response->execute(array('id' => $_SESSION['id']));
+                ?>
                 <select id="category" name="category">
-                    <option value="1">Catégorie 1</option>
-                    <option value="1">Catégorie 2</option>
-                    <option value="1">Catégorie 3</option>
-                    <option value="1">Catégorie 4</option>
+                    <?php
+                    while ($data = $response->fetch()) {
+                        echo '<option value="'.$data['iddomaine'].'">'.$data['libelle'].'</option>';
+                    }
+                    ?>
                 </select><br/>
                 <input style="margin-top: 10px;" type="submit" value="Ajouter à sa liste de catégories préférées">
             </form>
         </fieldset>
         <fieldset>
             <legend>Supprimer une catégorie préférée</legend>
-            <form>
+            <form action="removePrefCat.php" method="post">
                 <label for="category">Catégorie choisie :</label>
+                <?php
+                $response = $db->prepare('
+                        SELECT * FROM domaine WHERE domaine.iddomaine IN (
+                                SELECT interet.iddomaine FROM interet WHERE idabonne=:id
+                            )
+                        ');
+                $response->execute(array('id' => $_SESSION['id']));
+                ?>
                 <select id="category" name="category">
-                    <option value="1">Catégorie 1</option>
-                    <option value="1">Catégorie 2</option>
-                    <option value="1">Catégorie 3</option>
-                    <option value="1">Catégorie 4</option>
+                    <?php
+                    while ($data = $response->fetch()) {
+                        echo '<option value="'.$data['iddomaine'].'">'.$data['libelle'].'</option>';
+                    }
+                    ?>
                 </select><br/>
                 <input style="margin-top: 10px;" type="submit" value="Supprimer de sa liste de catégories préférées">
             </form>

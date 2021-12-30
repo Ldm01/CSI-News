@@ -10,7 +10,13 @@
     <script src="https://kit.fontawesome.com/f3b2d82c4d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<?php include 'menu.php'; displayMenu('news'); ?>
+<?php include 'menu.php'; displayMenu('news');
+$response = $db->prepare('SELECT * FROM parametre');
+$response->execute();
+while ($data = $response->fetch()) {
+    $dureeAffichageMax = $data['dureeaffichagemaximale'];
+}
+?>
 <div class="content">
     <fieldset>
         <legend>Publier une news</legend>
@@ -20,7 +26,7 @@
             <label for="content">Contenu de la news :</label><br/>
             <textarea id="content" name="content" rows="18" cols="80" placeholder="Ecrivez votre news ici..."></textarea><br/>
             <label for="duration">Combien de temps (nb de jours) voulez-vous que votre news soit affichée publiquement ?</label>
-            <input type="number" min="2" max="14" value="2" name="duration" id="duration"><br/>
+            <input type="number" min="2" max=<?php echo '"'.$dureeAffichageMax.'"'?> value="2" name="duration" id="duration"><br/>
             <label for="keywords">Veuillez sélectionner au minimum un mot clé :</label><br/>
             <select id="keywords" name="keywords[]" multiple size="4" required>
                 <?php

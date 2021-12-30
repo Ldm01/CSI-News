@@ -1,5 +1,5 @@
 <?php
-$response = $db->prepare('SELECT idnews, titre, contenu, datepublication, pseudo, etatn  FROM news INNER JOIN abonne ON news.idabonne = abonne.idabonne');
+$response = $db->prepare('SELECT idnews, titre, contenu, datepublication, pseudo, etatn  FROM news INNER JOIN abonne ON news.idabonne = abonne.idabonne ORDER BY datepublication DESC');
 $response->execute();
 
 while($data = $response->fetch()) {

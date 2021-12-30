@@ -16,6 +16,7 @@ while($data = $response->fetch()) {
     $author = $data['pseudo'];
     $state = $data['etatn'];
     $id = $data['idnews'];
+    $idAbo = $data['idabonne'];
     $cat = $data['libelle'];
     $idMotCle1 = $data['idmotcle1'];
     $idMotCle2 = $data['idmotcle2'];

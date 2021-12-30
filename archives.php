@@ -50,10 +50,13 @@
     <form>
         <label for="category">Catégorie choisie :</label>
         <select id="category" name="category">
-            <option value="1">Catégorie 1</option>
-            <option value="1">Catégorie 2</option>
-            <option value="1">Catégorie 3</option>
-            <option value="1">Catégorie 4</option>
+            <?php
+            $response = $db->prepare('SELECT * FROM domaine WHERE estaccepte');
+            $response->execute();
+            while ($data = $response->fetch()) {
+                echo '<option value="'.$data['iddomaine'].'">'.$data['libelle'].'</option>';
+            }
+            ?>
         </select><br/>
         <input style="margin-top: 10px;" type="submit" value="Afficher les news de la catégorie">
     </form>
@@ -63,10 +66,13 @@
     <form>
         <label for="keyword">Mot clé choisi :</label>
         <select id="keyword" name="keyword">
-            <option value="1">Mot clé 1</option>
-            <option value="1">Mot clé 2</option>
-            <option value="1">Mot clé 3</option>
-            <option value="1">Mot clé 4</option>
+            <?php
+            $response = $db->prepare('SELECT * FROM mot_cle');
+            $response->execute();
+            while ($data = $response->fetch()) {
+                echo '<option value="'.$data['idmotcle'].'">'.$data['libelle'].'</option>';
+            }
+            ?>
         </select><br/>
         <input style="margin-top: 10px;" type="submit" value="Rechercher">
     </form>
