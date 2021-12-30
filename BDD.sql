@@ -255,7 +255,7 @@ CREATE USER adminUser;
 GRANT administrateur TO adminUser;
 
 CREATE ROLE abonne;
-GRANT SELECT ON compte, abonne, domaine, news, mot_cle, archive_news, interet TO abonne;
+GRANT SELECT ON compte, abonne, domaine, news, mot_cle, archive_news, interet, parametre TO abonne;
 GRANT INSERT ON compte, abonne, domaine, etude, news, mot_cle, interet TO abonne;
 GRANT DELETE ON interet, news TO abonne;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO abonne;
