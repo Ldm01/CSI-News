@@ -317,3 +317,45 @@ BEGIN
     RETURN ok;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION publication_bef() RETURNS trigger AS $publication$
+  BEGIN
+    IF NEW.titre IS NULL THEN
+      RAISE EXCEPTION 'titre ne peut pas être vide';
+    END IF;
+    IF NEW.contenu IS NULL THEN
+      RAISE EXCEPTION 'contenu ne peut pas être vide';
+    END IF;
+    NEW.datePublication := current_timestamp;
+    NEW.etatN := 'non validée';
+    IF NEW.dureeAffichage IS NULL THEN
+      RAISE EXCEPTION 'dureeAffichage ne peut pas être vide';
+    END IF;
+    IF NEW.idAbonne IS NULL THEN
+      RAISE EXCEPTION 'idAbonne ne peut pas être vide';
+    END IF;
+    IF NEW.idDomaine IS NULL THEN
+      RAISE EXCEPTION 'idDomaine ne peut pas être vide';
+    END IF;
+    IF NEW.idMotCle1 IS NULL THEN
+      RAISE EXCEPTION 'idMotCle1 ne peut pas être vide';
+    END IF;
+  END;
+$publication$ LANGUAGE plpgsql;
+
+CREATE TRIGGER publication_bef BEFORE INSERT ON news
+  FOR EACH ROW EXECUTE FUNCTION publication_bef();
+
+  CREATE OR REPLACE FUNCTION publication_aft() RETURNS trigger AS $publication$
+    DECLARE
+      idAbonConf abonne.idAbonne%type;
+    BEGIN
+    IF NEW.idNews IS  NOT NULL THEN
+      SELECT MIN(idAbonne) INTO idAbonConf FROM abonne WHERE confiance = TRUE;
+      INSERT INTO etude (idAbonne, idNews) VALUES (idAbonConf, NEW.idNews);
+    END IF;
+    END;
+  $publication$ LANGUAGE plpgsql;
+
+  CREATE TRIGGER publication_aft AFTER INSERT ON news
+    FOR EACH ROW EXECUTE FUNCTION publication_aft();
