@@ -81,6 +81,14 @@
                 <input style="margin-top: 10px;" type="submit" value="Soumettre">
             </form>
         </fieldset>
-        <!-- QUAND ADMIN ajouter menu pour changer paramètres globaux du site -->
+        <fieldset>
+            <legend>Ajouter un mot clé utilisable sur le site</legend>
+            <form action="addKeywords.php" method="post">
+                <label for="keyword">Mot clé :</label>
+                <input type="text" name="keyword" id="keyword" placeholder="Ex: technologie">
+                <br/>
+                <input style="margin-top: 10px;" type="submit" value="Soumettre">
+            </form>
+        </fieldset>
 	</body>
 </html>
