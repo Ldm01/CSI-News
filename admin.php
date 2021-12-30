@@ -58,6 +58,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
             <p style="text-align: center;">
             <video autoplay loop width="800px" height="430px">
                  <source src="autres/hehe.mp4" type="video/mp4">
+                 <source src="autres/hehe.webm" type="video/webm">
             </video>
 </p>
 ';
