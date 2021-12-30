@@ -103,8 +103,8 @@ CREATE TABLE IF NOT EXISTS interet
     idAbonne integer,
     idDomaine integer,
     FOREIGN KEY(idAbonne) REFERENCES abonne(idAbonne),
-    FOREIGN KEY(idDomaine) REFERENCES domaine(idDomaine),
-    )
+    FOREIGN KEY(idDomaine) REFERENCES domaine(idDomaine)
+)
 
     TABLESPACE pg_default;
 
