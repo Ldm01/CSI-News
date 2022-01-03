@@ -387,3 +387,39 @@ VALUES (idAuthor, cat, keyword1, keyword2, keyword3, title, contentNews, current
 RETURN idarticle;
 END;
 $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE PROCEDURE modifier_parametres(PdureeAffichageMax integer,
+											   PnbEtudeSansRepMax integer,
+											   PnbNewsMinAboConf integer,
+											   PdureeEtude integer)
+    LANGUAGE plpgsql
+AS $$
+DECLARE
+currentDureeAffichageMax integer;
+	currentNbEtudeSansRepMax integer;
+	currentNbNewsMinAboConf integer;
+	currentDureeEtude integer;
+BEGIN
+SELECT dureeaffichagemaximale INTO currentDureeAffichageMax FROM parametre;
+SELECT nbetudesansrepmax INTO currentNbEtudeSansRepMax FROM parametre;
+SELECT nbnewsminaboconf INTO currentNbNewsMinAboConf FROM parametre;
+SELECT dureeetude INTO currentDureeEtude FROM parametre;
+
+IF currentDureeAffichageMax <> PdureeAffichageMax THEN
+UPDATE parametre SET dureeaffichagemaximale = PdureeAffichageMax;
+END IF;
+
+	IF currentNbEtudeSansRepMax <> PnbEtudeSansRepMax THEN
+UPDATE parametre SET nbetudesansrepmax = PnbEtudeSansRepMax;
+END IF;
+
+	IF currentNbNewsMinAboConf <> PnbNewsMinAboConf THEN
+UPDATE parametre SET nbnewsminaboconf = PnbNewsMinAboConf;
+END IF;
+
+	IF currentDureeEtude <> PdureeEtude THEN
+UPDATE parametre SET dureeetude = PdureeEtude;
+END IF;
+END;
+$$;
