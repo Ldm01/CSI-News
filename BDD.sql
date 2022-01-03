@@ -406,7 +406,7 @@ SELECT nbetudesansrepmax INTO currentNbEtudeSansRepMax FROM parametre;
 SELECT nbnewsminaboconf INTO currentNbNewsMinAboConf FROM parametre;
 SELECT dureeetude INTO currentDureeEtude FROM parametre;
 
-IF currentDureeAffichageMax <> PdureeAffichageMax THEN
+    IF currentDureeAffichageMax <> PdureeAffichageMax THEN
 UPDATE parametre SET dureeaffichagemaximale = PdureeAffichageMax;
 END IF;
 
