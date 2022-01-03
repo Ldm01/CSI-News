@@ -9,45 +9,19 @@
     <script src="https://kit.fontawesome.com/f3b2d82c4d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<?php include 'menu.php'; displayMenu('archives'); ?>
+<?php include 'menu.php'; displayMenu('archives');
+if (isset($_SESSION['id'])) { ?>
 <div class="content" id="active_news">
     <table id="active_news_table">
         <tr>
             <th>News Archivées | Toutes catégories</th>
         </tr>
-        <tr>
-            <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                <br/>Etat : Validée
-                <br/><a href="#" class="readBtn">Lire la suite</a></td>
-        </tr>
-        <tr>
-            <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                <br/>Etat : Validée
-                <br/><a href="#" class="readBtn">Lire la suite</a></td>
-        </tr>
-        <tr>
-            <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                <br/>Etat : Validée
-                <br/><a href="#" class="readBtn">Lire la suite</a></td>
-        </tr>
-        <tr>
-            <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                <br/>Etat : Validée
-                <br/><a href="#" class="readBtn">Lire la suite</a></td>
-        </tr>
+        <?php include 'displayArchives.php'; ?>
     </table>
 </div>
 <fieldset>
     <legend>Affichage par catégorie</legend>
-    <form>
+    <form action="archivesCat.php" method="get">
         <label for="category">Catégorie choisie :</label>
         <select id="category" name="category">
             <?php
@@ -77,5 +51,11 @@
         <input style="margin-top: 10px;" type="submit" value="Rechercher">
     </form>
 </fieldset>
+<?php
+    } else {
+        header('Location: register_loginPage.php');
+        exit();
+    }
+    ?>
 </body>
 </html>
