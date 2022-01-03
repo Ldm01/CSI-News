@@ -24,11 +24,14 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
     $response->execute();
     while ($data = $response->fetch()) {
         $dureeAffichageMax = $data['dureeaffichagemaximale'];
+        $nbEtudeSansRepMax = $data['nbetudesansrepmax'];
+        $nbNewsMinAboConf = $data['nbnewsminaboconf'];
+        $dureeEtude = $data['dureeetude'];
     }
 ?>
     <fieldset>
         <legend>Modifier les paramètres du site</legend>
-        <form>
+        <form action="modifyParameters.php" method="post">
             <table>
                 <tr>
                     <td><label for="dureeaffichagemaximale">Durée d'affichage maximale d'une news (en jours) :</label></td>
@@ -36,15 +39,15 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
                 </tr>
                 <tr>
                     <td><label for="nbetudesansrepmax">Nombre d'études sans réponse maximum :</label></td>
-                    <td><input type="number" name="nbetudesansrepmax" id="nbetudesansrepmax" min="1"><br/></td>
+                    <td><input type="number" name="nbetudesansrepmax" id="nbetudesansrepmax" min="1" value=<?php echo '"'.$nbEtudeSansRepMax.'"'?>><br/></td>
                 </tr>
                 <tr>
                     <td><label for="nbnewsminaboconf">Nombre de publications minimum pour qu'un abonné devienne de confiance :</label></td>
-                    <td><input type="number" name="nbnewsminaboconf" id="nbnewsminaboconf" min="1"></td>
+                    <td><input type="number" name="nbnewsminaboconf" id="nbnewsminaboconf" min="1" value=<?php echo '"'.$nbNewsMinAboConf.'"'?>></td>
                 </tr>
                 <tr>
                     <td><label for="dureeetude">Durée d'étude d'une news :</label></td>
-                    <td><input type="number" name="dureeetude" id="dureeetude" min="1"></td>
+                    <td><input type="number" name="dureeetude" id="dureeetude" min="1" value=<?php echo '"'.$dureeEtude.'"'?>></td>
                 </tr>
                 <tr>
                     <td></td>
