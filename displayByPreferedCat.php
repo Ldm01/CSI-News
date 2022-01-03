@@ -1,8 +1,8 @@
 <?php
 $response = $db->prepare('SELECT iddomaine, idnews, titre, contenu, datepublication, pseudo, etatn  FROM news 
                             INNER JOIN abonne ON news.idabonne = abonne.idabonne
-                            WHERE news.iddomaine IN (SELECT interet.iddomaine FROM interet WHERE idabonne=1)');
-$response->execute();
+                            WHERE news.iddomaine IN (SELECT interet.iddomaine FROM interet WHERE idabonne=:id)');
+$response->execute(array('id' => $_SESSION['id']));
 
 while($data = $response->fetch()) {
     $title = $data['titre'];
