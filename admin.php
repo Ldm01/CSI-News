@@ -53,6 +53,24 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
             </table>
         </form>
     </fieldset>
+    <fieldset>
+        <legend>Valider des noms de domaines (catégories)</legend>
+        <form action="validateDomain.php" method="get">
+            <label for="domain">Nom de domaine :</label>
+            <?php
+            $response = $db->prepare('SELECT * FROM domaine WHERE estaccepte = false');
+            $response->execute();
+            ?>
+            <select id="domain" name="domain">
+                <?php
+                while ($data = $response->fetch()) {
+                    echo '<option value="'.$data['iddomaine'].'">'.$data['libelle'].'</option>';
+                }
+                ?>
+            </select>
+            <input type="submit" value="Valider">
+        </form>
+    </fieldset>
 <?php } else {
     echo '<p style="font-size: 32px; text-align: center;">Petit malin tu as cru pouvoir nous hacker :D</p>
             <p style="text-align: center;">
