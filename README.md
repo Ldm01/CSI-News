@@ -10,8 +10,8 @@
 ## Quentin :
 - [V] Dictionnaire de données
 - [ ] Modèle physique
-- [ ] Soumettre un nom de domaine
-- [ ] Recherche news par mots clés
+- [V] Soumettre un nom de domaine
+- [V] Recherche news par mots clés
 - [V] Inscription
 ## Valentin : 
 - [O] Création des utilisateurs BDD + droits associés
