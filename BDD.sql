@@ -310,6 +310,7 @@ VALUES(Pnom, Ppseudo, Pprenom, Pemail, Ptelephone, PdateInscription, false, fals
 END;
 $$;
 
+--- Verification des identifiants de connexion ---
 CREATE OR REPLACE FUNCTION connexion (pseudonyme char, passwd char)
     RETURNS boolean as $$
 DECLARE ok boolean;
@@ -321,6 +322,26 @@ Where pseudo = $1;
 RETURN ok;
 END;
 $$ LANGUAGE plpgsql;
+
+--- Obtenir l'id d'un abonné de confiance ---
+
+CREATE OR REPLACE FUNCTION selectTrusted ()
+    RETURNS INT as $$
+	DECLARE 
+		idTrustedAbo INT;
+		random_numb INT;
+	BEGIN
+    		select idabonne 
+        	from abonne
+       		where confiance = TRUE
+		into idTrustedAbo
+        	ORDER BY random()
+        	LIMIT 1;
+		
+		return idTrustedAbo;
+	END;
+$$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION publication_bef() RETURNS trigger AS $publication$
   BEGIN
