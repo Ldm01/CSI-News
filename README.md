@@ -18,8 +18,8 @@
 - [O] Rajouter description droits
 - [O] Publier une news
 - [O] Vérification attributs news 
-- [ ] Archiver une news
-- [ ] Trigger devenir abonne confiance
+- [Y] Archiver une news
+- [Y] Trigger devenir abonne confiance
 ## Benjamin : 
 - [ ] Diagramme états
 - [x] Création des tables PGSQL
