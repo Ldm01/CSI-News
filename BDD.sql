@@ -255,8 +255,8 @@ CREATE USER adminUser;
 GRANT administrateur TO adminUser;
 
 CREATE ROLE abonne;
-GRANT SELECT ON compte, abonne, domaine, news, mot_cle, archive_news, interet, parametre TO abonne;
-GRANT INSERT ON compte, abonne, domaine, etude, news, mot_cle, interet TO abonne;
+GRANT SELECT ON compte, abonne, domaine, news, mot_cle, archive_news, interet, etude, parametre TO abonne;
+GRANT INSERT ON compte, abonne, domaine, etude, news, mot_cle, interet, etude TO abonne;
 GRANT DELETE ON interet, news TO abonne;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO abonne;
 CREATE USER abonneUser;
@@ -354,7 +354,6 @@ CREATE TRIGGER publication_bef BEFORE INSERT ON news
 /*
 NE MARCHE PAS POUR LE MOMENT !
                 CHOISIR ABONNE DE CONFIANCE AU HASARD POUR ETUDIER L'ARTICLE
-
 CREATE OR REPLACE FUNCTION publication_aft() RETURNS trigger AS $publication$
     DECLARE
       idAbonConf abonne.idabonne%type;
@@ -365,10 +364,8 @@ CREATE OR REPLACE FUNCTION publication_aft() RETURNS trigger AS $publication$
     END IF;
     END;
   $publication$ LANGUAGE plpgsql;
-
 CREATE TRIGGER publication_aft AFTER INSERT ON news
     FOR EACH ROW EXECUTE FUNCTION publication_aft();
-
 */
 
 CREATE OR REPLACE FUNCTION publier(idAuthor integer,
@@ -387,6 +384,42 @@ VALUES (idAuthor, cat, keyword1, keyword2, keyword3, title, contentNews, current
 RETURN idarticle;
 END;
 $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE PROCEDURE modifier_parametres(PdureeAffichageMax integer,
+											   PnbEtudeSansRepMax integer,
+											   PnbNewsMinAboConf integer,
+											   PdureeEtude integer)
+    LANGUAGE plpgsql
+AS $$
+DECLARE
+currentDureeAffichageMax integer;
+	currentNbEtudeSansRepMax integer;
+	currentNbNewsMinAboConf integer;
+	currentDureeEtude integer;
+BEGIN
+SELECT dureeaffichagemaximale INTO currentDureeAffichageMax FROM parametre;
+SELECT nbetudesansrepmax INTO currentNbEtudeSansRepMax FROM parametre;
+SELECT nbnewsminaboconf INTO currentNbNewsMinAboConf FROM parametre;
+SELECT dureeetude INTO currentDureeEtude FROM parametre;
+
+    IF currentDureeAffichageMax <> PdureeAffichageMax THEN
+UPDATE parametre SET dureeaffichagemaximale = PdureeAffichageMax;
+END IF;
+
+	IF currentNbEtudeSansRepMax <> PnbEtudeSansRepMax THEN
+UPDATE parametre SET nbetudesansrepmax = PnbEtudeSansRepMax;
+END IF;
+
+	IF currentNbNewsMinAboConf <> PnbNewsMinAboConf THEN
+UPDATE parametre SET nbnewsminaboconf = PnbNewsMinAboConf;
+END IF;
+
+	IF currentDureeEtude <> PdureeEtude THEN
+UPDATE parametre SET dureeetude = PdureeEtude;
+END IF;
+END;
+$$;
 
 CREATE OR REPLACE FUNCTION archiver() RETURNS trigger AS $archiver$
 DECLARE

@@ -1,16 +1,16 @@
 <?php
-$response = $db->prepare('SELECT iddomaine, idnews, titre, contenu, datepublication, pseudo, etatn  FROM news 
-                            INNER JOIN abonne ON news.idabonne = abonne.idabonne
-                            WHERE news.iddomaine IN (SELECT interet.iddomaine FROM interet WHERE idabonne=:id)');
-$response->execute(array('id' => $_SESSION['id']));
+$response = $db->prepare('SELECT iddomaine, idarchive, titre, contenu, datepublication, pseudo, etata  FROM archive_news 
+                            INNER JOIN abonne ON archive_news.idabonnep = abonne.idabonne
+                            WHERE archive_news.iddomaine = :idCat');
+$response->execute(array('idCat' => $_GET['category']));
 
 while($data = $response->fetch()) {
     $title = $data['titre'];
     $content = $data['contenu'];
     $date = $data['datepublication'];
     $author = $data['pseudo'];
-    $state = $data['etatn'];
-    $idNews = $data['idnews'];
+    $state = $data['etata'];
+    $idNews = $data['idarchive'];
 
     $content = substr($content, 0, 200);
     $content .= '...';

@@ -1,7 +1,9 @@
 <?php
-$response = $db->prepare('SELECT iddomaine, idnews, titre, contenu, datepublication, pseudo, etatn  FROM news 
-                            INNER JOIN abonne ON news.idabonne = abonne.idabonne
-                            WHERE news.iddomaine IN (SELECT interet.iddomaine FROM interet WHERE idabonne=:id)');
+$response = $db->prepare('
+    SELECT pseudo, news.idnews, titre, contenu, datepublication, etatn FROM news 
+    INNER JOIN etude ON news.idnews = etude.idnews INNER JOIN abonne ON news.idabonne = abonne.idabonne
+    WHERE etude.idabonne = :id ORDER BY datepublication DESC
+    ');
 $response->execute(array('id' => $_SESSION['id']));
 
 while($data = $response->fetch()) {

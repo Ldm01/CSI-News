@@ -9,41 +9,15 @@
 		<script src="https://kit.fontawesome.com/f3b2d82c4d.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
-        <?php include 'menu.php'; displayMenu('profil'); ?>
+        <?php include 'menu.php'; displayMenu('profil');
+        if (isset($_SESSION['id'])) { ?>
         </div><br/>
         <div class="content" id="active_news">
             <table id="active_news_table">
                 <tr>
                     <th>News en attente de validation</th>
                 </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
-                <tr>
-                    <td>TITRE<br/>Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. Suspendisse nisi est, euismod commodo lacus vitae,
-                        lobortis commodo turpis. Integer mollis ante id velit condimentum, et lobo...<br/>Ecrit par Person, le 00/00/00 à 00:00
-                        <br/>Etat : Validée
-                        <br/><a href="#" class="readBtn">Lire la suite</a></td>
-                </tr>
+                <?php include 'displayNewsToValidate.php'; ?>
             </table>
         </div>
         <fieldset>
@@ -107,5 +81,11 @@
                 <input style="margin-top: 10px;" type="submit" value="Soumettre">
             </form>
         </fieldset>
+    <?php
+    } else {
+        header('Location: register_loginPage.php');
+        exit();
+    }
+    ?>
 	</body>
 </html>

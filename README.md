@@ -6,13 +6,12 @@
 - [ ] Activités recherche news - couloirs acteurs
 - [x] Structure
 - [x] Création des comptes liés aux différents rôles
-- [ ] CRON appel procédure archivage (A FAIRE AVEC TRIGGER POUR SIMPLICITE)
-- [ ] Modifier paramètres du site (Args : le paramètre qu’on veut changer)
+- [x] Modifier paramètres du site
 ## Quentin :
 - [V] Dictionnaire de données
 - [ ] Modèle physique
-- [ ] Soumettre un nom de domaine
-- [ ] Recherche news par mots clés
+- [V] Soumettre un nom de domaine
+- [V] Recherche news par mots clés
 - [V] Inscription
 ## Valentin : 
 - [O] Création des utilisateurs BDD + droits associés

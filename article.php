@@ -11,7 +11,7 @@
     </head>
     <body>
 <?php include 'menu.php'; displayMenu('news'); include 'displayArticle.php';
-    if (isset($_SESSION['id']) && $_SESSION['id'] === $idAbo) {
+    if (isset($_SESSION['id']) && ($_SESSION['id'] === $idAbo || $_SESSION['admin']) ) {
         echo '<form action="deleteArticle.php" method="post">
                 <input type="hidden" value="' . $id . '" name="idArticle">
                 <input type="submit" value="Supprimer l\'article"</a>

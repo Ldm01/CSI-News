@@ -10,18 +10,25 @@
 </head>
 <body>
 <?php include 'menu.php'; displayMenu('archives');
-if (isset($_SESSION['id'])) { ?>
+$response = $db->prepare('SELECT libelle FROM domaine WHERE iddomaine =:id');
+$response->execute(array('id' => $_GET['category']));
+while ($data = $response->fetch()) {
+    $cat = $data['libelle'];
+}
+if (isset($_SESSION['id'])) {
+    ?>
+<?php } ?>
 <div class="content" id="active_news">
     <table id="active_news_table">
         <tr>
-            <th>News Archivées | Toutes catégories</th>
+            <th>News Archivées | Catégorie : <?php echo $cat ?></th>
         </tr>
-        <?php include 'displayArchives.php'; ?>
+        <?php include 'displayByCatArchives.php'; ?>
     </table>
 </div>
 <fieldset>
     <legend>Affichage par catégorie</legend>
-    <form action="archivesCat.php" method="get">
+    <form action="archivesCat.php" action="post">
         <label for="category">Catégorie choisie :</label>
         <select id="category" name="category">
             <?php
@@ -36,7 +43,7 @@ if (isset($_SESSION['id'])) { ?>
     </form>
 </fieldset>
 <fieldset>
-    <legend>Recherche de news archivées par mot clé</legend>
+    <legend>Recherche de news actives par mot clé</legend>
     <form>
         <label for="keyword">Mot clé choisi :</label>
         <select id="keyword" name="keyword">
@@ -51,11 +58,5 @@ if (isset($_SESSION['id'])) { ?>
         <input style="margin-top: 10px;" type="submit" value="Rechercher">
     </form>
 </fieldset>
-<?php
-    } else {
-        header('Location: register_loginPage.php');
-        exit();
-    }
-    ?>
 </body>
 </html>
