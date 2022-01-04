@@ -431,7 +431,7 @@ BEGIN
 LOOP
   dateFin=n.datePublication+n.dureeAffichage;
   IF (dateFin > now()) THEN
-    IF () THEN
+    IF EXIST (SELECT FROM etude WHERE idNews = n.idNews) THEN
       SELECT idAbonne INTO idAE FROM etude WHERE idNews = n.idNews;
       INSERT INTO archive_News(titre, contenu, datePublication, dateArchivage, etatA, idDomaine, idAbonneP, idAbonneE, idMotCle1, idMotCle2, idMotCle3)
       VALUES (n.titre, n.contenu, n.datePublication, dateFin, n.etatN, n.idDomaine, n.idAbonne, idAE, n.idMotCle1, n.idMotCle2, n.idMotCle3);
