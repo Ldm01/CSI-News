@@ -387,3 +387,53 @@ VALUES (idAuthor, cat, keyword1, keyword2, keyword3, title, contentNews, current
 RETURN idarticle;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION archiver() RETURNS trigger AS $archiver$
+DECLARE
+  n record;
+  dateFin news.datePublication%type;
+  idAE etude.idAbonne%type;
+BEGIN
+  FOR n IN SELECT * FROM news
+LOOP
+  dateFin=n.datePublication+n.dureeAffichage;
+  IF (dateFin > now()) THEN
+    IF () THEN
+      SELECT idAbonne INTO idAE FROM etude WHERE idNews = n.idNews;
+      INSERT INTO archive_News(titre, contenu, datePublication, dateArchivage, etatA, idDomaine, idAbonneP, idAbonneE, idMotCle1, idMotCle2, idMotCle3)
+      VALUES (n.titre, n.contenu, n.datePublication, dateFin, n.etatN, n.idDomaine, n.idAbonne, idAE, n.idMotCle1, n.idMotCle2, n.idMotCle3);
+    ELSE
+      INSERT INTO archive_News(titre, contenu, datePublication, dateArchivage, etatA, idDomaine, idAbonneP, idMotCle1, idMotCle2, idMotCle3)
+      VALUES (n.titre, n.contenu, n.datePublication, dateFin, n.etatN, n.idDomaine, n.idAbonne, n.idMotCle1, n.idMotCle2, n.idMotCle3);
+    END IF;
+    DELETE FROM etude WHERE idNews=n.idNews;
+    DELETE FROM news WHERE idNews=n.idNews;
+  END IF;
+END LOOP;
+END;
+
+CREATE TRIGGER archiver AFTER SELECT OR INSERT ON news
+    FOR EACH ROW EXECUTE FUNCTION archiver();
+
+CREATE OR REPLACE FUNCTION devAboConf() RETURNS trigger AS $devAboConf$
+DECLARE
+  a record;
+  nbN integer;
+  nbNV integer;
+BEGIN
+  FOR a IN SELECT * FROM abonne
+LOOP
+  SELECT COUNT(*) INTO nbN FROM news WHERE idAbonne = a.idAbonne;
+  IF (nbN > parametre.nbNewsMinAboConf) THEN
+    SELECT COUNT(*) INTO nbNV FROM news WHERE idAbonne = a.idAbonne AND etatN = 'validé';
+    IF (nbNV>nbN*0.8) THEN
+      UPDATE abonne SET confiance = TRUE WHERE idAbonne = a.idAbonne;
+    ELSE
+      UPDATE abonne SET confiance = FALSE WHERE idAbonne = a.idAbonne;
+    END IF;
+  END IF;
+END LOOP;
+END;
+
+CREATE TRIGGER devAboConf AFTER SELECT ON compte
+    FOR EACH ROW EXECUTE FUNCTION devAboConf();
