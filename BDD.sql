@@ -380,7 +380,7 @@ CREATE OR REPLACE FUNCTION publication_aft() RETURNS trigger AS $publication$
       idAbonConf abonne.idabonne%type;
     BEGIN
     IF NEW.idnews IS  NOT NULL THEN
-      SELECT MIN(idabonne) INTO idAbonConf FROM abonne WHERE confiance = TRUE;
+      SELECT idabonne INTO idAbonConf FROM abonne WHERE confiance = TRUE ORDER BY random() LIMIT 1;
       INSERT INTO etude (idabonne, idnews) VALUES (idAbonConf, NEW.idnews);
     END IF;
     END;
