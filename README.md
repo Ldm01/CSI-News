@@ -8,11 +8,11 @@
 - [x] Création des comptes liés aux différents rôles
 - [x] Modifier paramètres du site
 ## Quentin :
-- [V] Dictionnaire de données
+- [x] Dictionnaire de données
 - [ ] Modèle physique
-- [V] Soumettre un nom de domaine
-- [V] Recherche news par mots clés
-- [V] Inscription
+- [x] Soumettre un nom de domaine
+- [x] Recherche news par mots clés
+- [x] Inscription
 ## Valentin : 
 - [O] Création des utilisateurs BDD + droits associés
 - [O] Rajouter description droits
