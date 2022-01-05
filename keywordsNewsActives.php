@@ -22,7 +22,7 @@
                 <tr>
                     <th>News Actives | Toutes catégories</th>
                 </tr>
-                <?php include 'displayNews.php'; ?>
+                <?php include 'searchActiveNews.php'; ?>
             </table>
         </div>
         <fieldset>
@@ -43,7 +43,7 @@
         </fieldset>
         <fieldset>
             <legend>Recherche de news actives par mot clé</legend>
-            <form action="keywordsNewsActives.php" method="get">
+            <form action="searchActiveNews.php" method="post">
                 <label for="keyword">Mot clé choisi :</label>
                 <select id="keyword" name="keyword">
                     <?php
