@@ -47,6 +47,14 @@ while ($data = $response->fetch()) {
     $keyword3 = $data['libelle'];
 }
 
+$idValidator = -1;
+
+$response = $db->prepare('SELECT idabonne FROM etude WHERE idnews = :id');
+$response->execute(array('id' => $id));
+while ($data = $response->fetch()) {
+    $idValidator = $data['idabonne'];
+}
+
 echo '
         <h2>'.$title.'</h2>
         <p class="headerNews">Ecrit par '.$author.' le '.date_format($date, 'd/m/Y').' | Catégorie : '.$cat.' | Etat : '.$state.' | Mots clés : '.$keyword1.', '.$keyword2. ', '.$keyword3.'</p>

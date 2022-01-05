@@ -99,7 +99,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
     </fieldset>
     <fieldset>
         <legend style="margin-bottom: 10px">Boutons automatiques</legend>
-        <a class="btnAuto" href="#">Vérification abonnés confiance</a>
+        <a class="btnAuto" href="aboConf.php">Vérification abonnés confiance</a>
         <a class="btnAuto" href="archiver.php">Archivage des news</a>
         <a class="btnAuto" href="#">Etude d'une news délai</a>
     </fieldset>

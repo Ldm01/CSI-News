@@ -18,7 +18,7 @@
                 </form>
                 ';
     }
-        if ($state !== 'validé') {?>
+        if ($state !== 'validé' && $idValidator == $_SESSION['id']) {?>
         <fieldset style="text-align: center;" id="validateNews">
             <legend>Valider la news</legend>
             <form>
