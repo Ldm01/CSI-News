@@ -442,7 +442,7 @@ END IF;
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION archiver() RETURNS trigger AS $archiver$
+CREATE OR REPLACE PROCEDURE archiver() LANGUAGE plpgsql AS $$
 DECLARE
   n record;
   dateFin news.datePublication%type;
@@ -464,12 +464,10 @@ LOOP
     DELETE FROM news WHERE idNews=n.idNews;
   END IF;
 END LOOP;
-END;
+COMMIT;
+END $$;
 
-CREATE TRIGGER archiver AFTER SELECT OR INSERT ON news
-    FOR EACH ROW EXECUTE FUNCTION archiver();
-
-CREATE OR REPLACE FUNCTION devAboConf() RETURNS trigger AS $devAboConf$
+CREATE OR REPLACE PROCEDURE devAboConf() LANGUAGE plpgsql AS $$
 DECLARE
   a record;
   nbN integer;
@@ -487,7 +485,5 @@ LOOP
     END IF;
   END IF;
 END LOOP;
-END;
-
-CREATE TRIGGER devAboConf AFTER SELECT ON compte
-    FOR EACH ROW EXECUTE FUNCTION devAboConf();
+COMMIT;
+END $$;
