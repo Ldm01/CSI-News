@@ -509,18 +509,13 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION RechercheMotCle(keyword varchar(30))
+CREATE OR REPLACE FUNCTION RechercheMotCle(keyword varchar(30), archive boolean)
 RETURNS TABLE(idNews integer,
-    idAbonne integer,
-    idDomaine integer,
-    idMotCle1 integer,
-    idMotCle2 integer,
-    idMotCle3 integer,
     titre varchar(30),
     contenu text,
     datePublication date,
-    dureeAffichage integer,
-    etatN varchar)
+    etatN etat,
+	pseudo varchar(30))
 AS $$
 DECLARE
 MC integer;
@@ -529,21 +524,31 @@ BEGIN
 		RAISE EXCEPTION 'Le mot clÃ© est introuvable';
 END IF;
 SELECT idmotcle INTO MC FROM mot_cle WHERE libelle = keyword;
-RETURN QUERY(SELECT n.idNews,
-        n.idAbonne,
-        n.idDomaine,
-        n.idMotCle1,
-        n.idMotCle2,
-        n.idMotCle3,
+IF archive = TRUE THEN
+	RETURN QUERY(SELECT n.idarchive,
         n.titre,
         n.contenu,
         n.datePublication,
-        n.dureeAffichage,
-        n.etatN
-            FROM news n
+        n.etata,
+		ab.pseudo
+            FROM archive_news n
+			INNER JOIN abonne ab ON n.idabonnep = ab.idabonne
 				 WHERE MC = n.idMotCle1
 				 OR MC = n.idMotCle2
 				 OR MC = n.idMotCle3);
+ELSE
+	RETURN QUERY(SELECT n.idNews,
+        n.titre,
+        n.contenu,
+        n.datePublication,
+        n.etatN,
+		ab.pseudo
+            FROM news n
+			INNER JOIN abonne ab ON n.idabonne = ab.idabonne
+				 WHERE MC = n.idMotCle1
+				 OR MC = n.idMotCle2
+				 OR MC = n.idMotCle3);
+END IF;
 END;
 $$
 LANGUAGE plpgsql;
