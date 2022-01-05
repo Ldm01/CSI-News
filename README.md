@@ -24,7 +24,7 @@
 - [ ] Diagramme états
 - [x] Création des tables PGSQL
 - [x] Connexion	
-- [ ] Choisir abonné de confiance au hasard pour valider la news
+- [x] Choisir abonné de confiance au hasard pour valider la news
 
 ## Everyone :
 - [ ] Simplifier diagramme séquences
