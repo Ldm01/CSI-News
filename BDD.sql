@@ -491,3 +491,59 @@ END;
 
 CREATE TRIGGER devAboConf AFTER SELECT ON compte
     FOR EACH ROW EXECUTE FUNCTION devAboConf();
+
+CREATE OR REPLACE PROCEDURE SoumettreDomaine(idAbo integer, nomDomaine varchar(30))
+AS $$
+BEGIN
+	IF (SELECT COUNT(*) FROM abonne WHERE abonne.idabonne = idAbo) = 0  THEN
+		RAISE EXCEPTION 'idAbonne est introuvable';
+    END IF;
+    IF (SELECT COUNT(*) FROM domaine WHERE domaine.libelle = nomDomaine) <> 0  THEN
+        RAISE EXCEPTION 'Ce nom de domaine a déjà été proposé';
+    END IF;
+	IF nomDomaine = '' THEN
+		RAISE EXCEPTION 'Le nom du domaine est obligatoire';
+    END IF;
+INSERT INTO domaine (idabonnepropo, libelle) VALUES (idAbo, nomDomaine);
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION RechercheMotCle(keyword varchar(30))
+RETURNS TABLE(idNews integer,
+    idAbonne integer,
+    idDomaine integer,
+    idMotCle1 integer,
+    idMotCle2 integer,
+    idMotCle3 integer,
+    titre varchar(30),
+    contenu text,
+    datePublication date,
+    dureeAffichage integer,
+    etatN varchar)
+AS $$
+DECLARE
+MC integer;
+BEGIN
+	IF (SELECT COUNT(*) FROM mot_cle WHERE mot_cle.libelle = keyword) = 0  THEN
+		RAISE EXCEPTION 'Le mot clÃ© est introuvable';
+END IF;
+SELECT idmotcle INTO MC FROM mot_cle WHERE libelle = keyword;
+RETURN QUERY(SELECT n.idNews,
+        n.idAbonne,
+        n.idDomaine,
+        n.idMotCle1,
+        n.idMotCle2,
+        n.idMotCle3,
+        n.titre,
+        n.contenu,
+        n.datePublication,
+        n.dureeAffichage,
+        n.etatN
+            FROM news n
+				 WHERE MC = n.idMotCle1
+				 OR MC = n.idMotCle2
+				 OR MC = n.idMotCle3);
+END;
+$$
+LANGUAGE plpgsql;
