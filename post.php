@@ -7,8 +7,7 @@ $duration = $_POST['duration'];
 $keywords = $_POST['keywords'];
 $cat = $_POST['domain'];
 $idAuthor = $_SESSION['id'];
-
-
+$duration = $duration.' day';
 
 switch (count($keywords)) {
     case 1:
