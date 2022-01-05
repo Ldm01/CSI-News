@@ -15,6 +15,11 @@
         input {
             text-align: center;
         }
+        .btnAuto {
+            border: blue 2px solid;
+            padding: 5px;
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
@@ -91,6 +96,12 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
             </select>
             <input type="submit" value="Valider">
         </form>
+    </fieldset>
+    <fieldset>
+        <legend style="margin-bottom: 10px">Boutons automatiques</legend>
+        <a class="btnAuto" href="#">Vérification abonnés confiance</a>
+        <a class="btnAuto" href="archiver.php">Archivage des news</a>
+        <a class="btnAuto" href="#">Etude d'une news délai</a>
     </fieldset>
 <?php } else {
     echo '<p style="font-size: 32px; text-align: center;">Petit malin tu as cru pouvoir nous hacker :D</p>
