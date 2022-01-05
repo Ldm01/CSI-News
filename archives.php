@@ -44,7 +44,7 @@ if (isset($_SESSION['id'])) { ?>
             $response = $db->prepare('SELECT * FROM mot_cle');
             $response->execute();
             while ($data = $response->fetch()) {
-                echo '<option value="'.$data['idmotcle'].'">'.$data['libelle'].'</option>';
+                echo '<option value="'.$data['libelle'].'">'.$data['libelle'].'</option>';
             }
             ?>
         </select><br/>
