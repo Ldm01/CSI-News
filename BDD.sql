@@ -464,7 +464,6 @@ LOOP
     DELETE FROM news WHERE idNews=n.idNews;
   END IF;
 END LOOP;
-COMMIT;
 END $$;
 
 CREATE OR REPLACE PROCEDURE devAboConf() LANGUAGE plpgsql AS $$
@@ -485,7 +484,6 @@ LOOP
     END IF;
   END IF;
 END LOOP;
-<<<<<<< HEAD
 END;
 
 CREATE TRIGGER devAboConf AFTER SELECT ON compte
@@ -551,7 +549,5 @@ END IF;
 END;
 $$
 LANGUAGE plpgsql;
-=======
-COMMIT;
 END $$;
->>>>>>> 1d03558dc56f88530615c48bb7deb56127e1338a
+
