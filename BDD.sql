@@ -7,9 +7,6 @@ CREATE DATABASE GestionNews
     OWNER = postgres
     ENCODING = 'UTF8';
 
-
-
-
 DROP TABLE IF EXISTS parametre;
 DROP TABLE IF EXISTS etude;
 DROP TABLE IF EXISTS news;
@@ -104,7 +101,7 @@ CREATE TABLE IF NOT EXISTS interet
     idDomaine integer,
     FOREIGN KEY(idAbonne) REFERENCES abonne(idAbonne),
     FOREIGN KEY(idDomaine) REFERENCES domaine(idDomaine)
-)
+    )
 
     TABLESPACE pg_default;
 
@@ -150,7 +147,7 @@ CREATE TABLE IF NOT EXISTS news
     titre varchar(30) NOT NULL,
     contenu text COLLATE pg_catalog."default" NOT NULL,
     datePublication date NOT NULL,
-    dureeAffichage integer NOT NULL,
+    dureeAffichage varchar(30) NOT NULL,
     etatN etat NOT NULL,
     FOREIGN KEY(idAbonne) REFERENCES abonne(idAbonne),
     FOREIGN KEY(idDomaine) REFERENCES domaine(idDomaine),
@@ -327,46 +324,46 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION selectTrusted ()
     RETURNS INT as $$
-	DECLARE 
-		idTrustedAbo INT;
+	DECLARE
+idTrustedAbo INT;
 		random_numb INT;
-	BEGIN
-    		select idabonne 
-        	from abonne
-       		where confiance = TRUE
-		into idTrustedAbo
-        	ORDER BY random()
-        	LIMIT 1;
-		
-		return idTrustedAbo;
-	END;
+BEGIN
+select idabonne
+from abonne
+where confiance = TRUE
+    into idTrustedAbo
+ORDER BY random()
+    LIMIT 1;
+
+return idTrustedAbo;
+END;
 $$ LANGUAGE plpgsql;
 
 
 CREATE OR REPLACE FUNCTION publication_bef() RETURNS trigger AS $publication$
-  BEGIN
+BEGIN
     IF NEW.titre IS NULL THEN
       RAISE EXCEPTION 'titre ne peut pas être vide';
-    END IF;
+END IF;
     IF NEW.contenu IS NULL THEN
       RAISE EXCEPTION 'contenu ne peut pas être vide';
-    END IF;
+END IF;
     NEW.datePublication := current_timestamp;
     NEW.etatN := 'nonvalidé';
     IF NEW.dureeAffichage IS NULL THEN
       RAISE EXCEPTION 'dureeAffichage ne peut pas être vide';
-    END IF;
+END IF;
     IF NEW.idAbonne IS NULL THEN
       RAISE EXCEPTION 'idAbonne ne peut pas être vide';
-    END IF;
+END IF;
     IF NEW.idDomaine IS NULL THEN
       RAISE EXCEPTION 'idDomaine ne peut pas être vide';
-    END IF;
+END IF;
     IF NEW.idMotCle1 IS NULL THEN
       RAISE EXCEPTION 'idMotCle1 ne peut pas être vide';
-    END IF;
-    RETURN NEW;
-  END;
+END IF;
+RETURN NEW;
+END;
 $publication$ LANGUAGE plpgsql;
 
 CREATE TRIGGER publication_bef BEFORE INSERT ON news
@@ -424,7 +421,7 @@ SELECT nbetudesansrepmax INTO currentNbEtudeSansRepMax FROM parametre;
 SELECT nbnewsminaboconf INTO currentNbNewsMinAboConf FROM parametre;
 SELECT dureeetude INTO currentDureeEtude FROM parametre;
 
-    IF currentDureeAffichageMax <> PdureeAffichageMax THEN
+IF currentDureeAffichageMax <> PdureeAffichageMax THEN
 UPDATE parametre SET dureeaffichagemaximale = PdureeAffichageMax;
 END IF;
 
@@ -444,63 +441,60 @@ $$;
 
 CREATE OR REPLACE PROCEDURE archiver() LANGUAGE plpgsql AS $$
 DECLARE
-  n record;
+n record;
   dateFin news.datePublication%type;
   idAE etude.idAbonne%type;
 BEGIN
-  FOR n IN SELECT * FROM news
-LOOP
-  dateFin=n.datePublication+n.dureeAffichage;
-  IF (dateFin > now()) THEN
-    IF EXIST (SELECT FROM etude WHERE idNews = n.idNews) THEN
-      SELECT idAbonne INTO idAE FROM etude WHERE idNews = n.idNews;
-      INSERT INTO archive_News(titre, contenu, datePublication, dateArchivage, etatA, idDomaine, idAbonneP, idAbonneE, idMotCle1, idMotCle2, idMotCle3)
-      VALUES (n.titre, n.contenu, n.datePublication, dateFin, n.etatN, n.idDomaine, n.idAbonne, idAE, n.idMotCle1, n.idMotCle2, n.idMotCle3);
-    ELSE
-      INSERT INTO archive_News(titre, contenu, datePublication, dateArchivage, etatA, idDomaine, idAbonneP, idMotCle1, idMotCle2, idMotCle3)
+FOR n IN SELECT * FROM news
+                           LOOP
+    dateFin=n.datePublication + n.dureeAffichage::interval;
+IF (dateFin < now()) THEN
+    IF EXISTS (SELECT * FROM etude WHERE idNews = n.idNews) THEN
+SELECT idAbonne INTO idAE FROM etude WHERE idNews = n.idNews;
+INSERT INTO archive_news(titre, contenu, datePublication, dateArchivage, etatA, idDomaine, idAbonneP, idAbonneE, idMotCle1, idMotCle2, idMotCle3)
+VALUES (n.titre, n.contenu, n.datePublication, dateFin, n.etatN, n.idDomaine, n.idAbonne, idAE, n.idMotCle1, n.idMotCle2, n.idMotCle3);
+ELSE
+      INSERT INTO archive_news(titre, contenu, datePublication, dateArchivage, etatA, idDomaine, idAbonneP, idMotCle1, idMotCle2, idMotCle3)
       VALUES (n.titre, n.contenu, n.datePublication, dateFin, n.etatN, n.idDomaine, n.idAbonne, n.idMotCle1, n.idMotCle2, n.idMotCle3);
-    END IF;
-    DELETE FROM etude WHERE idNews=n.idNews;
-    DELETE FROM news WHERE idNews=n.idNews;
-  END IF;
+END IF;
+DELETE FROM etude WHERE idNews=n.idNews;
+DELETE FROM news WHERE idNews=n.idNews;
+END IF;
 END LOOP;
 END $$;
 
 CREATE OR REPLACE PROCEDURE devAboConf() LANGUAGE plpgsql AS $$
 DECLARE
-  a record;
+a record;
   nbN integer;
   nbNV integer;
 BEGIN
-  FOR a IN SELECT * FROM abonne
-LOOP
-  SELECT COUNT(*) INTO nbN FROM news WHERE idAbonne = a.idAbonne;
-  IF (nbN > parametre.nbNewsMinAboConf) THEN
-    SELECT COUNT(*) INTO nbNV FROM news WHERE idAbonne = a.idAbonne AND etatN = 'validé';
-    IF (nbNV>nbN*0.8) THEN
-      UPDATE abonne SET confiance = TRUE WHERE idAbonne = a.idAbonne;
-    ELSE
-      UPDATE abonne SET confiance = FALSE WHERE idAbonne = a.idAbonne;
-    END IF;
-  END IF;
+FOR a IN SELECT * FROM abonne
+                           LOOP
+SELECT COUNT(*) INTO nbN FROM news WHERE idAbonne = a.idAbonne;
+IF (nbN > parametre.nbNewsMinAboConf) THEN
+SELECT COUNT(*) INTO nbNV FROM news WHERE idAbonne = a.idAbonne AND etatN = 'validé';
+IF (nbNV>nbN*0.8) THEN
+UPDATE abonne SET confiance = TRUE WHERE idAbonne = a.idAbonne;
+ELSE
+UPDATE abonne SET confiance = FALSE WHERE idAbonne = a.idAbonne;
+END IF;
+END IF;
 END LOOP;
-END;
-
-CREATE TRIGGER devAboConf AFTER SELECT ON compte
-    FOR EACH ROW EXECUTE FUNCTION devAboConf();
+END $$;
 
 CREATE OR REPLACE PROCEDURE SoumettreDomaine(idAbo integer, nomDomaine varchar(30))
 AS $$
 BEGIN
 	IF (SELECT COUNT(*) FROM abonne WHERE abonne.idabonne = idAbo) = 0  THEN
 		RAISE EXCEPTION 'idAbonne est introuvable';
-    END IF;
+END IF;
     IF (SELECT COUNT(*) FROM domaine WHERE domaine.libelle = nomDomaine) <> 0  THEN
         RAISE EXCEPTION 'Ce nom de domaine a déjà été proposé';
-    END IF;
+END IF;
 	IF nomDomaine = '' THEN
 		RAISE EXCEPTION 'Le nom du domaine est obligatoire';
-    END IF;
+END IF;
 INSERT INTO domaine (idabonnepropo, libelle) VALUES (idAbo, nomDomaine);
 END;
 $$
@@ -549,5 +543,3 @@ END IF;
 END;
 $$
 LANGUAGE plpgsql;
-END $$;
-
