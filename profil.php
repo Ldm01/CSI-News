@@ -65,9 +65,9 @@
         </fieldset>
         <fieldset>
             <legend>Soumettre un nom de domaine (catégorie)</legend>
-            <form>
+            <form action="domainSubmit.php" method="post">
                 <label for="domain">Nom de domaine :</label>
-                <input type="text" placeholder="Ex: Sports">
+                <input type="text" id="domain" name="domain" placeholder="Ex: Sports">
                 <br/>
                 <input style="margin-top: 10px;" type="submit" value="Soumettre">
             </form>
