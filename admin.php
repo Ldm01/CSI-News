@@ -57,11 +57,29 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
         </form>
     </fieldset>
     <fieldset>
-        <legend>Valider des noms de domaines (catégories)</legend>
-        <form action="validateDomain.php" method="get">
+        <legend>Accepter des noms de domaines (catégories)</legend>
+        <form action="validateDomain.php" method="post">
             <label for="domain">Nom de domaine :</label>
             <?php
-            $response = $db->prepare('SELECT * FROM domaine WHERE estaccepte = false');
+            $response = $db->prepare('SELECT * FROM domaine WHERE estaccepte IS NULL');
+            $response->execute();
+            ?>
+            <select id="domain" name="domain">
+                <?php
+                while ($data = $response->fetch()) {
+                    echo '<option value="'.$data['iddomaine'].'">'.$data['libelle'].'</option>';
+                }
+                ?>
+            </select>
+            <input type="submit" value="Valider">
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>Ne pas accepter des noms de domaines (catégories)</legend>
+        <form action="noAcceptDomain.php" method="post">
+            <label for="domain">Nom de domaine :</label>
+            <?php
+            $response = $db->prepare('SELECT * FROM domaine WHERE estaccepte IS NULL');
             $response->execute();
             ?>
             <select id="domain" name="domain">
