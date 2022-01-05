@@ -212,8 +212,7 @@ CREATE TABLE IF NOT EXISTS etude
     FOREIGN KEY(idAbonne) REFERENCES abonne(idAbonne),
     FOREIGN KEY(idNews) REFERENCES news(idNews),
     justification varchar(255),
-    dateEtude date,
-    PRIMARY KEY (idAbonne)
+    dateEtude date
     )
 
     TABLESPACE pg_default;
@@ -369,9 +368,7 @@ $publication$ LANGUAGE plpgsql;
 CREATE TRIGGER publication_bef BEFORE INSERT ON news
     FOR EACH ROW EXECUTE FUNCTION publication_bef();
 
-/*
-NE MARCHE PAS POUR LE MOMENT !
-                CHOISIR ABONNE DE CONFIANCE AU HASARD POUR ETUDIER L'ARTICLE
+
 CREATE OR REPLACE FUNCTION publication_aft() RETURNS trigger AS $publication$
     DECLARE
       idAbonConf abonne.idabonne%type;
@@ -380,11 +377,11 @@ CREATE OR REPLACE FUNCTION publication_aft() RETURNS trigger AS $publication$
       SELECT idabonne INTO idAbonConf FROM abonne WHERE confiance = TRUE ORDER BY random() LIMIT 1;
       INSERT INTO etude (idabonne, idnews) VALUES (idAbonConf, NEW.idnews);
     END IF;
+    RETURN NEW;
     END;
   $publication$ LANGUAGE plpgsql;
 CREATE TRIGGER publication_aft AFTER INSERT ON news
     FOR EACH ROW EXECUTE FUNCTION publication_aft();
-*/
 
 CREATE OR REPLACE FUNCTION publier(idAuthor integer,
                                    title varchar(30),
@@ -468,13 +465,15 @@ DECLARE
 a record;
   nbN integer;
   nbNV integer;
+  currentNbNewsMinAboConf integer;
 BEGIN
+SELECT nbnewsminaboconf INTO currentNbNewsMinAboConf FROM parametre;
 FOR a IN SELECT * FROM abonne
                            LOOP
 SELECT COUNT(*) INTO nbN FROM news WHERE idAbonne = a.idAbonne;
-IF (nbN > parametre.nbNewsMinAboConf) THEN
+IF (nbN >= currentNbNewsMinAboConf) THEN
 SELECT COUNT(*) INTO nbNV FROM news WHERE idAbonne = a.idAbonne AND etatN = 'validé';
-IF (nbNV>nbN*0.8) THEN
+IF (nbNV>=nbN*0.8) THEN
 UPDATE abonne SET confiance = TRUE WHERE idAbonne = a.idAbonne;
 ELSE
 UPDATE abonne SET confiance = FALSE WHERE idAbonne = a.idAbonne;
