@@ -9,7 +9,7 @@
 - [x] Modifier paramètres du site
 ## Quentin :
 - [x] Dictionnaire de données
-- [ ] Modèle physique
+- [x] Modèle physique
 - [x] Soumettre un nom de domaine
 - [x] Recherche news par mots clés
 - [x] Inscription
