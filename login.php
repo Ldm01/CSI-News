@@ -3,7 +3,7 @@ require 'connectDb.php';
 
 $username = htmlspecialchars($_POST['username']);
 $passwordNotCrypted = htmlspecialchars($_POST['password']);
-$password = hash('sha512',$passwordNotCrypted);
+$password = hash('sha256',$passwordNotCrypted);
 
 $response = $db->prepare("SELECT connexion(:pseudo, :motdepasse)");
 $response->execute(

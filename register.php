@@ -14,7 +14,7 @@ if ($passwordNotCrypted !== $passwordConfirm) {
     exit();
 }
 
-$password = hash('sha512',$passwordNotCrypted);
+$password = hash('sha256',$passwordNotCrypted);
 
 $response = $db->prepare(
     "CALL Inscription(:pseudo,:mdp,:nom,:prenom,:mail,:tel)"

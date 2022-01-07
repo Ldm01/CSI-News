@@ -22,7 +22,7 @@ while($data = $response->fetch()) {
                   '.$content.'<br/>
                   Ecrit par '.$author.', le '.date_format($date, 'd/m/Y').'<br/>
                   Etat : '.$state.'<br/>
-                  <a href="article.php?id='.$idNews.'" class="readBtn">Lire la suite</a>
+                  <a href="articleArchive.php?id='.$idNews.'" class="readBtn">Lire la suite</a>
               </td>
           </tr>
     ';

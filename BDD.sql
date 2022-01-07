@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS abonne;
 DROP TABLE IF EXISTS mot_cle;
 DROP TABLE IF EXISTS compte;
 
-CREATE TYPE etat AS ENUM ('validé','nonvalidé','echec');
+CREATE TYPE etat AS ENUM ('validé','nonvalidé','fausse');
 
 
 -- Table: public.Compte
@@ -97,10 +97,12 @@ ALTER TABLE domaine
 
 CREATE TABLE IF NOT EXISTS interet
 (
+    idInteret serial NOT NULL,
     idAbonne integer,
     idDomaine integer,
     FOREIGN KEY(idAbonne) REFERENCES abonne(idAbonne),
-    FOREIGN KEY(idDomaine) REFERENCES domaine(idDomaine)
+    FOREIGN KEY(idDomaine) REFERENCES domaine(idDomaine),
+    PRIMARY KEY (idInteret)
     )
 
     TABLESPACE pg_default;
@@ -207,12 +209,14 @@ ALTER TABLE archive_news
 
 CREATE TABLE IF NOT EXISTS etude
 (
+    idEtude serial NOT NULL,
     idAbonne integer,
     idNews integer,
     FOREIGN KEY(idAbonne) REFERENCES abonne(idAbonne),
     FOREIGN KEY(idNews) REFERENCES news(idNews),
     justification varchar(255),
-    dateEtude date
+    dateEtude date,
+    PRIMARY KEY (idEtude)
     )
 
     TABLESPACE pg_default;
@@ -254,6 +258,7 @@ CREATE ROLE abonne;
 GRANT SELECT ON compte, abonne, domaine, news, mot_cle, archive_news, interet, etude, parametre TO abonne;
 GRANT INSERT ON compte, abonne, domaine, etude, news, mot_cle, interet, etude TO abonne;
 GRANT DELETE ON interet, news TO abonne;
+GRANT UPDATE on news, etude TO abonne;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO abonne;
 CREATE USER abonneUser;
 GRANT abonne TO abonneUser;
@@ -542,3 +547,80 @@ END IF;
 END;
 $$
 LANGUAGE plpgsql;
+
+--- Jeu de données ---
+
+-- Comptes
+INSERT into compte(pseudo,mdp)
+VALUES
+    ('MrGalila','6cc100db94bd48ecae0941f8da2c6528b1867af37047ccfad60c2b9d15bb5449'),
+    ('doriantLeDodo','d67d2e60f5c2b245a0b7295e532fba3b79e4568cb4c8397448a2adfeebd11afd'),
+    ('chouchou','9416e44ec417b731d19f58af13bde42653504ea1640ab5a235926ee0b1ab4503'),
+    ('MonPereCDieu','e911010bc1050c52a42b645bad31e60ba2029384ef919603ab48adea2fae2a6c'),
+    ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
+
+INSERT into abonne(nom,prenom,email,telephone,dateInscription,admin,confiance,pseudo)
+VALUES
+    ('Admin','Admin','admin@mail.com',0612345678,'2019-07-23',true,true,'admin'),
+    ('Ziehl','Benjamin','TauraPasMonMail@Lustucru.com',0349586547,'2020-05-11',false,true,'MrGalila'),
+    ('Doriant','Bourade','doriantBourade@Lustucru.com',0232145685,'2020-06-13',false,true,'doriantLeDodo'),
+    ('Michel','Poiret','michelPoiret@Lustucru.com',0345689574,'1787-07-09',false,false,'chouchou'),
+    ('Christ','Jesus','FukLesCroix@Hippie.com',0101010101,'0001-01-01',false,true,'MonPereCDieu');
+
+-- Domaines
+INSERT into domaine(idAbonnePropo, libelle, estAccepte)
+VALUES
+    (2,'Sciences',true),
+    (4,'Technologie',true),
+    (1,'Sport',true),
+    (2,'Jeux vidéo',false),
+    (2,'Politique',true),
+    (5,'Environnement',null),
+    (4,'Transport',false),
+    (3,'Nourriture',null);
+
+-- Interet
+INSERT into interet(idAbonne, idDomaine)
+VALUES
+    (2, 1),
+    (4, 2),
+    (2, 4),
+    (1, 3),
+    (3, 2),
+    (5, 1),
+    (3, 3),
+    (2, 5),
+    (5, 4),
+    (4, 3),
+    (4, 2),
+    (1, 5),
+    (2, 2);
+
+-- Mots clés
+INSERT INTO mot_cle (libelle) VALUES ('chat')
+                                   ,('chien')
+                                   ,('cuisine')
+                                   ,('etudiant')
+                                   ,('famille')
+                                   ,('loi')
+                                   ,('vaccin')
+                                   ,('maladie')
+                                   ,('monnaie virtuel')
+                                   ,('chasse');
+
+-- News
+INSERT into news(idAbonne, idDomaine, idMotCle1, idMotCle2, idMotCle3, titre, contenu, datePublication, dureeAffichage, etatN)
+VALUES
+    (2,1,2,null,null,'pourquoi le feminisme moderne est rejeté','Aujourd''hui, les féministes ne se battent plus pour les femme, mais pour une égalité de résultat injuste et un musèlement sévère et toxique de la personnalité masculine, résultat, la majorité des femme ne veulent pas être associés à ce mouvement qui n''a plus rien à voir avec son identité originel', '2022-01-05', '2 day', 'nonvalidé'),
+    (5,2,5,null,null,'Pourquoi voter Zemmour','Il a de bonnes punchline et il dit Ben voyons', '2022-01-03', '4 day', 'validé'),
+    (4,2,4,5,null,'Nouveau jeu vidéo de l''année','Le nouveau jeu vidéo créé par les studios californiens est en train de devenir le nouveau jeu de la décennie avec ses 100 milliards de ventes physiques. C''est incroyable !','2022-01-09','10 day','fausse'),
+    (4, 4, 5 , null, null, 'La mort de la créativité dans le monde du jeu vidéo', 'La créativité dans le monde du jeu vidéo est en déclin, aujourd''hui seul les studios indépendants essayent des styles de jeux et idées nouvelles et innovantes. Ce mouvement a été lancé par le studio de jeux vidéo breton Ubisoft qui est resté sur ses acquis en sortant uniquement des suites à leurs jeux... <a href="autres/hehe.mp4">Appuyer pour voir plus...</a>', '2021-12-22', '5 day', 'validé');
+
+-- News archivées
+INSERT into archive_news(idAbonneP, idAbonneE, idDomaine, idMotCle1, idMotCle2, idMotCle3, titre, contenu, datePublication, dureeAffichage, etatA)
+VALUES
+    (3,2,2,4,null,null,'Robot qui aide les étudiants', 'Elon Musk, le célébre entrepreneur américain vient de dévoiler au monde entier son nouveau robot complétement autonome. En effet, celui-ci va permettre d''aider la plupart des étudiants dans leur tâches ménagères. Ils auront donc plus de temps pour étudier tels des étudiants sérieux...','2021-09-12','12 day','validé');
+
+
+-- Paramètres
+INSERT INTO parametre VALUES (14,3,5,1);

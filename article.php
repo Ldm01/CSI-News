@@ -21,7 +21,10 @@
         if ($state !== 'validé' && $idValidator == $_SESSION['id']) {?>
         <fieldset style="text-align: center;" id="validateNews">
             <legend>Valider la news</legend>
-            <form>
+            <form action="validateNews.php" method="post">
+                <input type="hidden" name="idNews" value=<?php echo '"'.$id.'"' ?>>
+                <input type="hidden" name="idAbo" value=<?php echo '"'.$idAbo.'"' ?>>
+                <input type="hidden" name="title" value=<?php echo '"'.$title.'"' ?>>
                 <label for="oui">Oui</label>
                 <input type="radio" value="oui" name="choice" id="oui" checked>
                 <label for="non">Non</label>
