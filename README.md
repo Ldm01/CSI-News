@@ -1,9 +1,9 @@
 # CSI-News
 
 ## Guillaume :
-- [ ] Réalisation du site internet PHP (Appels fonctions PGSQL)
+- [x] Réalisation du site internet PHP (Appels fonctions PGSQL)
 - [x] Création du repo
-- [ ] Activités recherche news - couloirs acteurs
+- [x] Activités recherche news - couloirs acteurs
 - [x] Structure
 - [x] Création des comptes liés aux différents rôles
 - [x] Modifier paramètres du site
@@ -14,12 +14,12 @@
 - [x] Recherche news par mots clés
 - [x] Inscription
 ## Valentin : 
-- [O] Création des utilisateurs BDD + droits associés
-- [O] Rajouter description droits
-- [O] Publier une news
-- [O] Vérification attributs news 
-- [Y] Archiver une news
-- [Y] Trigger devenir abonne confiance
+- [x] Création des utilisateurs BDD + droits associés
+- [x] Rajouter description droits
+- [x] Publier une news
+- [x] Vérification attributs news 
+- [x] Archiver une news
+- [x] Trigger devenir abonne confiance
 ## Benjamin : 
 - [ ] Diagramme états
 - [x] Création des tables PGSQL
